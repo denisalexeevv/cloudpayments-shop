@@ -41,6 +41,8 @@ import Vue from "vue";
 import Component from "vue-class-component";
 import {mapGetters, mapMutations, mapState} from "vuex";
 import PaymentDialog from '@/components/PaymentDialog.vue'
+import CartDataEntity from "@/interfaces/CartDataEntity";
+import PizzaDataEntity from "@/interfaces/PizzaDataEntity";
 
 @Component({
   components: { PaymentDialog },
@@ -54,6 +56,10 @@ import PaymentDialog from '@/components/PaymentDialog.vue'
   }
 })
 export default class Cart extends Vue {
+  cart!: CartDataEntity[];
+  catalog!: PizzaDataEntity[];
+  getCatalogItemById!: PizzaDataEntity;
+
   dialog = false
 }
 </script>

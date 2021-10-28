@@ -22,6 +22,7 @@ import {mapGetters} from "vuex";
   }
 })
 export default class Navbar extends Vue {
+  cartCount!: number;
 }
 </script>
 

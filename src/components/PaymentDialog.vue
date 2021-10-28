@@ -24,6 +24,8 @@
 import Vue from "vue";
 import Component from "vue-class-component";
 import {mapMutations, mapState} from "vuex";
+import PizzaDataEntity from "@/interfaces/PizzaDataEntity";
+import CartDataEntity from "@/interfaces/CartDataEntity";
 
 declare const cp: any;
 
@@ -38,6 +40,11 @@ declare const cp: any;
   }
 })
 export default class PaymentDialog extends Vue {
+  value!: boolean;
+  cart!: CartDataEntity[];
+  catalog!: PizzaDataEntity[];
+  clearCart!: () => void;
+
   cardNumber = ''
   cardholder = ''
 
@@ -72,9 +79,11 @@ export default class PaymentDialog extends Vue {
   get sum() {
     if(this.cart.length === 0) return 0;
     let s = 0;
-    this.cart.forEach(x => {
-      s += x.quantity * this.catalog.find(x => x.id === x.id).price;
-    })
+    for(let i of this.cart) {
+      let t = this.catalog.find((x: PizzaDataEntity) => x.id === i.id);
+      if(!t) continue;
+      s += i.quantity * t.price;
+    }
     return s;
   }
 }

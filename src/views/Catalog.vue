@@ -22,6 +22,7 @@
 import Vue from "vue";
 import Component from "vue-class-component";
 import {mapMutations, mapState} from "vuex";
+import PizzaDataEntity from "@/interfaces/PizzaDataEntity";
 
 @Component({
   computed: {
@@ -32,7 +33,8 @@ import {mapMutations, mapState} from "vuex";
   }
 })
 export default class Catalog extends Vue {
-
+  catalog!: PizzaDataEntity[];
+  addItemToCart!: (id: number) => void;
 }
 </script>
 

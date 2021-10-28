@@ -12,6 +12,8 @@ import Vue from "vue"
 import Component from "vue-class-component";
 import Navbar from "@/components/Navbar.vue";
 import {mapActions, mapMutations, mapState} from "vuex";
+import CartDataEntity from "@/interfaces/CartDataEntity";
+import PizzaDataEntity from "@/interfaces/PizzaDataEntity";
 
 @Component({
   components: {
@@ -20,17 +22,17 @@ import {mapActions, mapMutations, mapState} from "vuex";
   methods: {
     ...mapActions('catalogData', ['loadCatalog']),
     ...mapMutations('cartData', ['syncCartItems'])
-  },
-  computed: {
-    ...mapState('catalogData', ['catalog'])
   }
 })
 export default class App extends Vue {
+  loadCatalog!: () => void;
+  syncCartItems!: (items: CartDataEntity[]) => void;
+
   async mounted() {
     await this.loadCatalog();
-    if(localStorage.getItem('cart')) this.syncCartItems(JSON.parse(localStorage.getItem('cart')))
+    if(localStorage.getItem('cart')) this.syncCartItems(JSON.parse(localStorage.getItem('cart') ?? '[]'))
     window.addEventListener('storage', e => {
-      if(e.key == 'cart') this.syncCartItems(JSON.parse(e.newValue));
+      if(e.key == 'cart') this.syncCartItems(JSON.parse(e.newValue ?? '[]'));
     })
   }
 }
